@@ -9,7 +9,9 @@ const PORT = process.env.PORT || 3001
 
 // var usersobj = {users: __dirname + './public'};
 
-app.use(bodyparser.urlencoded({extended: true}))
+app.use(bodyparser.urlencoded({extended: true}));
+
+app.use(bodyparser.json());
 
 app.use(express.static(path.join(__dirname, './public')));
 
@@ -28,20 +30,20 @@ app.post('/api/notespost', (req, res) => {
     console.log('/api/notespost')
     // let json = getJson();
     console.log(req.body);
-    addNoteToJSON(req.body)
+    addNotesToJSON(req.body)
     res.json(getJson());
 })
 
 app.delete('/api/notes/:id', (req, res) => {
     console.log('/api/notes/:iddelete')
-    deleteNotesFromJSON(req.params.id);
+    deleteNoteFromJSON(req.params.id);
     res.json(getJson());
 })
 
 app.listen(PORT, () => console.log(`Express HTTP server is listening on port: ${PORT}`))
 
 function getJson() {
-    let data = fs.readFileSync(__dirname + 'db/db.json');
+    let data = fs.readFileSync(`${__dirname}/db/db.json`);
     let json = JSON.parse(data);
     // console.log('got the data');
     return json;
@@ -50,12 +52,12 @@ function getJson() {
 function createNoteObject(data) {
     let obj = {title: data.title,
                text: data.text,
-               complete: false,
-               hidden: false}
-    return json;           
+               complete: true,
+               hidden: true}
+    return obj;           
 }
 
-function addNoteToJSON(note) {
+function addNotesToJSON(note) {
     let json = getJson();
     let newNote = createNoteObject(note);
     json.push(newNote);
@@ -64,7 +66,7 @@ function addNoteToJSON(note) {
 
 function saveJSON(jsonData) {
     let data = JSON.stringify(jsonData);
-    fs.writeFileSync(__dirname + '/db/db.json', data);
+    fs.writeFileSync(`${__dirname}/db/db.json`,data);
 }
 
 function deleteNoteFromJSON(id) {
