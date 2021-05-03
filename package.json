@@ -1,0 +1,23 @@
+{
+  "name": "note-taker",
+  "version": "1.0.0",
+  "description": "note taker",
+  "main": "server.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DRockmore89/Note-taker.git"
+  },
+  "author": "Donald Rockmore",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/DRockmore89/Note-taker/issues"
+  },
+  "homepage": "https://github.com/DRockmore89/Note-taker#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "fs": "*"
+  }
+}
