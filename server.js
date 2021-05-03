@@ -4,6 +4,7 @@ const fs = require('fs');
 const path = require('path');
 const bodyparser = require('body-parser');
 const { json } = require('express');
+const { v4: uuidv4 } = require('uuid');
 
 const PORT = process.env.PORT || 3001
 
@@ -52,6 +53,7 @@ function getJson() {
 function createNoteObject(data) {
     let obj = {title: data.title,
                text: data.text,
+               id: uuidv4(),
                complete: true,
                hidden: true}
     return obj;           
@@ -71,7 +73,12 @@ function saveJSON(jsonData) {
 
 function deleteNoteFromJSON(id) {
     let json = getJson();
-    json(id).hide = true
-    save.JSON(json);
+    const index = json.findIndex((note) => note.id === id);
+    if (index < 0) {
+        console.log(`no notes are found with id: ${id}`);
+        return;
+    }
+    json.splice(index, 1)
+    saveJSON(json);
 }
 

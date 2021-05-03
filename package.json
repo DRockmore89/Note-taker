@@ -18,6 +18,7 @@
   "homepage": "https://github.com/DRockmore89/Note-taker#readme",
   "dependencies": {
     "express": "^4.17.1",
-    "fs": "*"
+    "fs": "*",
+    "uuid": "^8.3.2"
   }
 }
