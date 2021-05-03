@@ -2,20 +2,20 @@ const express = require('express');
 const app = express();
 const fs = require('fs');
 const path = require('path');
-const bodyParser = require('body-parser');
-// const { json } = require('express');
+const bodyparser = require('body-parser');
+const { json } = require('express');
 
 const PORT = process.env.PORT || 3001
 
-var usersobj = {users: __dirname + '/public'};
+// var usersobj = {users: __dirname + './public'};
 
-app.use(body.parser.urlencoded({extended: true}))
+app.use(bodyparser.urlencoded({extended: true}))
 
-app.use(express.static(path.join(__dirname, '/public')));
+app.use(express.static(path.join(__dirname, './public')));
 
-app.get('/', (req, res) => res.sendFile('/index.html', userobj));
+app.get('/', (req, res) => res.sendFile(`${__dirname}/public/index.html`));
 
-app.get('/notes', (req, res) => res.sendFile('/notes', userobj));
+app.get('/notes', (req, res) => res.sendFile(`${__dirname}/public/notes.html`));
 
 app.get('/api/notes', (req, res) => {
     console.log('/api/notesget')
@@ -38,7 +38,7 @@ app.delete('/api/notes/:id', (req, res) => {
     res.json(getJson());
 })
 
-app.listen(port, () => console.log(`Express HTTP server is listening on port: ${port}`))
+app.listen(PORT, () => console.log(`Express HTTP server is listening on port: ${PORT}`))
 
 function getJson() {
     let data = fs.readFileSync(__dirname + 'db/db.json');
